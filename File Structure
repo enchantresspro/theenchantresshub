@@ -1,0 +1,8 @@
+enchantress-website/
+├── index.html          # Main page
+├── assets/
+│   ├── css/
+│   │   └── style.css   # All styling
+│   ├── js/
+│   │   └── main.js     # Interactive elements
+│   └── images/         # (assets-images)

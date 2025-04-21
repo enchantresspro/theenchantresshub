@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENCHANTRESS | PRODUCTIONS</title>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Amoresa&family=Cinzel+Decorative&family=Playfair+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== BASE STYLES ===== */
+        :root {
+            --bg: #170f0e;
+            --text: #e5d0a9;
+            --accent: #e2949e;
+            --highlight: #2a122d;
+            --secondary: #614d51;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Playfair Display', serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* ===== NAVIGATION BAR ===== */
+        .enchantress-nav {
+            background: rgba(23, 15, 14, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 1rem 3rem;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--secondary);
+        }
+
+        .logo {
+            font-family: 'Amoresa', 'Cinzel Decorative', serif;
+            font-size: 1.8rem;
+            color: var(--text);
+            text-decoration: none;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+
+        .logo:hover {
+            color: var(--accent);
+            text-shadow: 0 0 10px var(--accent);
+        }
+
+        /* Navigation Links */
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 1.1rem;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: var(--bg);
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            z-index: 1;
+            border: 1px solid var(--secondary);
+            border-radius: 0 0 5px 5px;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            padding: 12px 16px;
+            display: block;
+            font-size: 1rem;
+        }
+
+        .dropdown-content a:hover {
+            background: rgba(97, 77, 81, 0.3);
+        }
+
+        /* ===== CART & PROFILE ICONS ===== */
+        .nav-actions {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .action-icon {
+            position: relative;
+            color: var(--text);
+            font-size: 1.3rem;
+            transition: all 0.3s;
+        }
+
+        .action-icon:hover {
+            color: var(--accent);
+            transform: scale(1.1);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff4d4d;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-family: 'Playfair Display', serif;
+            box-shadow: 0 0 8px rgba(255, 77, 77, 0.6);
+            border: 1px solid var(--bg);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 0.5s ease-in-out;
+        }
+
+        /* ===== PAGE CONTENT ===== */
+        .page-content {
+            padding-top: 80px;
+            min-height: 100vh;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?ixlib=rb-4.0.3&auto=format&fit=crop&w=2048&q=80') no-repeat center/cover;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            z-index: 10;
+            padding: 0 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero-content h1 {
+            font-family: 'Amoresa', 'Cinzel Decorative', serif;
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 10px var(--accent);
+            animation: glow 3s infinite alternate;
+        }
+
+        @keyframes glow {
+            to { text-shadow: 0 0 20px var(--accent); }
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+            max-width: 700px;
+            line-height: 1.6;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--text);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            background: rgba(226, 148, 158, 0.1);
+            box-shadow: 0 0 20px var(--accent);
+        }
+
+        /* ===== SECTION STYLES ===== */
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-family: 'Amoresa', 'Cinzel Decorative', serif;
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            text-shadow: 0 0 10px var(--accent);
+            animation: glow 3s infinite alternate;
+        }
+
+        /* ===== FEATURED SPELLS ===== */
+        .spells-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .spell-card {
+            background: rgba(33, 20, 16, 0.5);
+            border: 1px solid var(--secondary);
+            padding: 0;
+            border-radius: 5px;
+            transition: all 0.3s;
+            overflow: hidden;
+        }
+
+        .spell-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            border-color: var(--accent);
+        }
+
+        .spell-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+            border-bottom: 1px solid var(--secondary);
+        }
+
+        .spell-content {
+            padding: 1.5rem;
+        }
+
+        .spell-title {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        /* ===== STATS SECTION ===== */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--text);
+            opacity: 0.8;
+        }
+
+        /* ===== SERIES SECTION ===== */
+        .series-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .series-card {
+            background: rgba(33, 20, 16, 0.5);
+            border: 1px solid var(--secondary);
+            padding: 0;
+            border-radius: 5px;
+            transition: all 0.3s;
+            overflow: hidden;
+        }
+
+        .series-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            border-color: var(--accent);
+        }
+
+        .series-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+            border-bottom: 1px solid var(--secondary);
+        }
+
+        .series-content {
+            padding: 1.5rem;
+        }
+
+        .series-title {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 1.8rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        /* ===== PROFILE PAGE ===== */
+        .profile-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            background: rgba(33, 20, 16, 0.3);
+            border-radius: 5px;
+            border: 1px solid var(--secondary);
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .profile-title {
+            font-family: 'Amoresa', 'Cinzel Decorative', serif;
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--secondary);
+        }
+
+        .auth-tab {
+            padding: 1rem;
+            cursor: pointer;
+            font-family: 'Cinzel Decorative', serif;
+            flex: 1;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .auth-tab.active {
+            color: var(--accent);
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-family: 'Cinzel Decorative', serif;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(33, 20, 16, 0.5);
+            border: 1px solid var(--secondary);
+            color: var(--text);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--accent);
+            color: var(--bg);
+            border: none;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .auth-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px var(--accent);
+        }
+
+        /* ===== CART PAGE ===== */
+        .cart-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .cart-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .cart-items {
+            margin-bottom: 3rem;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 2rem;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--secondary);
+            align-items: center;
+        }
+
+        .cart-item-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 1.3rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-item-price {
+            font-size: 1.1rem;
+        }
+
+        .cart-item-remove {
+            color: var(--accent);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .cart-item-remove:hover {
+            transform: scale(1.2);
+        }
+
+        .cart-summary {
+            background: rgba(33, 20, 16, 0.3);
+            padding: 2rem;
+            border-radius: 5px;
+            border: 1px solid var(--secondary);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .summary-total {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 1.5rem;
+            color: var(--accent);
+            border-top: 1px solid var(--secondary);
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--accent);
+            color: var(--bg);
+            border: none;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 2rem;
+        }
+
+        .checkout-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px var(--accent);
+        }
+
+        /* ===== SOCIAL MEDIA PAGES ===== */
+        .social-hero {
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?ixlib=rb-4.0.3&auto=format&fit=crop&w=2048&q=80') no-repeat center/cover;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 3rem;
+        }
+
+        .social-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .social-follow-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--accent);
+            color: var(--bg);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            text-decoration: none;
+            border-radius: 30px;
+            margin-top: 2rem;
+            transition: all 0.3s;
+        }
+
+        .social-follow-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--accent);
+        }
+
+        /* ===== ABOUT PAGE ===== */
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-image {
+            width: 100%;
+            border-radius: 5px;
+            box-shadow: 0 0 30px rgba(226, 148, 158, 0.2);
+        }
+
+        /* ===== CONTACT PAGE ===== */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(33, 20, 16, 0.5);
+            border: 1px solid var(--secondary);
+            color: var(--text);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--accent);
+            color: var(--bg);
+            border: none;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px var(--accent);
+        }
+
+        /* ===== BRANDS PAGE ===== */
+        .brands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .brand-card {
+            background: rgba(33, 20, 16, 0.5);
+            border: 1px solid var(--secondary);
+            padding: 0;
+            border-radius: 5px;
+            text-align: center;
+            transition: all 0.3s;
+            overflow: hidden;
+        }
+
+        .brand-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            border-color: var(--accent);
+        }
+
+        .brand-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+            border-bottom: 1px solid var(--secondary);
+        }
+
+        .brand-content {
+            padding: 1.5rem;
+        }
+
+        .brand-logo {
+            font-family: 'Amoresa', 'Cinzel Decorative', serif;
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        /* ===== STAY IN LOOP SECTION ===== */
+        .newsletter-section {
+            text-align: center;
+            padding: 5rem 2rem;
+            background: rgba(33, 20, 16, 0.3);
+        }
+
+        /* ===== MAGICAL EFFECTS ===== */
+        .sparkle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            animation: sparkle-fade 1s forwards;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes sparkle-fade {
+            0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(3); }
+        }
+
+        .magic-particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 999;
+            animation: particle-float 3s forwards;
+        }
+
+        @keyframes particle-float {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-100px) scale(0.5); opacity: 0; }
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: rgba(23, 15, 14, 0.9);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid var(--secondary);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            color: var(--text);
+            font-size: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--accent);
+            transform: scale(1.2);
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 768px) {
+            .enchantress-nav {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+            
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+            
+            .hero-content p {
+                font-size: 1.2rem;
+            }
+            
+            .about-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .cart-item {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="enchantress-nav">
+        <a href="index.html" class="logo">ENCHANTRESS PRODUCTIONS</a>
+        
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            
+            <div class="dropdown">
+                <a href="#">Content <i class="fas fa-chevron-down"></i></a>
+                <div class="dropdown-content">
+                    <a href="tiktok.html">TikTok</a>
+                    <a href="instagram.html">Instagram</a>
+                    <a href="youtube.html">YouTube</a>
+                    <a href="lemon8.html">Lemon8</a>
+                </div>
+            </div>
+            
+            <a href="coming-soon.html">Coming Soon</a>
+            <a href="brands.html">Brands By Me</a>
+            <a href="about.html">About Me</a>
+            <a href="contact.html">Contact Me</a>
+        </div>
+        
+        <div class="nav-actions">
+            <!-- Profile Icon -->
+            <a href="#feature-unavailable" class="action-icon">
+                <i class="fas fa-user"></i>
+            </a>
+            <a href="#feature-unavailable" class="action-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-badge" id="cart-badge">0</span>
+            </a>
+        </div>
+    </nav>
+    
+
+    <!-- Main Content -->
+    <div id="page-content">
+        <!-- Homepage -->
+        <div id="home-page" class="page-content">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>THE ENCHANTRESS HUB</h1>
+                    <p>A cinematic spell of dark femininity, beauty, and self-alchemy.</p>
+                    <div class="hero-buttons">
+                        <a href="#featured-spells" class="btn">View My Best Content</a>
+                        <a href="#shop-coming-soon" class="btn">Shop My Brands</a> <!-- Updated link -->
+                        <a href="https://www.youtube.com/@Kingkepher" class="btn" target="_blank">Watch My YouTube</a>
+                    </div>
+                </div>
+                
+                <!-- Floating magic particles -->
+                <div class="magic-particle" style="left: 20%; top: 30%;"></div>
+                <div class="magic-particle" style="left: 70%; top: 50%; animation-delay: 0.5s;"></div>
+                <div class="magic-particle" style="left: 40%; top: 70%; animation-delay: 1s;"></div>
+            </section>
+
+            <!-- Featured Spells Section -->
+            <section id="featured-spells" class="section">
+                <h2 class="section-title">Featured Spells</h2>
+                <div class="spells-grid">
+                    <div class="spell-card">
+                        <img src="https://i.pinimg.com/736x/76/4b/ac/764bac3a419fdd49d2501874503175aa.jpg" alt="Dark Feminine" class="spell-image">
+                        <div class="spell-content">
+                            <h3 class="spell-title">Dark Feminine</h3>
+                            <p>They never recover after she walks away.</p>
+                        </div>
+                    </div>
+                    <div class="spell-card">
+                        <img src="https://i.pinimg.com/736x/9c/40/f0/9c40f071aeea6aa40701ac804d7c3f65.jpg" alt="Daily Silence Core" class="spell-image">
+                        <div class="spell-content">
+                            <h3 class="spell-title">Daily Silence Core</h3>
+                            <p>Honor your beauty as a sacred ceremony.</p>
+                        </div>
+                    </div>
+                    <div class="spell-card">
+                        <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Subtle on the Eyes" class="spell-image">
+                        <div class="spell-content">
+                            <h3 class="spell-title">Subtle on the Eyes</h3>
+                            <p>But bold on the lips.</p>
+                        </div>
+                    </div>
+                    <div class="spell-card">
+                        <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Capsule Wardrobe" class="spell-image">
+                        <div class="spell-content">
+                            <h3 class="spell-title">Capsule Wardrobe</h3>
+                            <p>Minimal pieces: Infinite looks.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+          
+
+            <!-- Series Section -->
+            <section id="series" class="section">
+                <h2 class="section-title">Series and Spellbooks</h2>
+                <div class="series-container">
+                    <div class="series-card">
+                        <img src="https://i.pinimg.com/736x/97/b0/36/97b0362d198a847c1e60cce38f4c8b1c.jpg" alt="Body Care Secrets" class="series-image">
+                        <div class="series-content">
+                            <h3 class="series-title">The Art of Seduction: Body Care Secrets</h3>
+                            <p>Discover the sacred power of body care as a spiritual and seductive art. This series invites you into intimate rituals of deep nourishment, bathing ceremonies, and sensory transformation.</p>
+                        </div>
+                    </div>
+                    <div class="series-card">
+                        <img src="https://i.pinimg.com/736x/b3/ed/03/b3ed039390b644df4e4863895c55296b.jpg" alt="Makeup Mastery" class="series-image">
+                        <div class="series-content">
+                            <h3 class="series-title">The Glamour Coven: Makeup Mastery</h3>
+                            <p>Step inside the coven of color and enchantment. Here, makeup transcends technique—it's transformation. Learn the secrets of glamour magic, rooted in confidence, mythology, and feminine power.</p>
+                        </div>
+                    </div>
+                    <div class="series-card">
+                        <img src="https://i.pinimg.com/736x/41/d8/40/41d8403ae3d20b5d19585637ed702aad.jpg" alt="DIY and Lifestyle Magic" class="series-image">
+                        <div class="series-content">
+                            <h3 class="series-title">The Enchanted Atelier: DIY and Lifestyle Magic</h3>
+                            <p>The sacred space where intention meets creation. From aesthetic decor to spiritual crafts, this playlist creates a reality of daily magic and the power of crafting a life that looks like a spell.</p>
+                        </div>
+                    </div>
+                    <div class="series-card">
+                        <img src="https://i.pinimg.com/736x/27/48/ee/2748ee0caadae3fc0d2e0ba7fdc9c7a8.jpg" alt="Fashion Rituals" class="series-image">
+                        <div class="series-content">
+                            <h3 class="series-title">Threads of Power: Fashion Rituals</h3>
+                            <p>Fashion becomes a language of power and protection. Whether invoking archetypes through wardrobe or styling for spiritual commands, each episode unpacks the spellwork woven into fabric and silhouettes.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stay in Loop Section -->
+            <section id="stay-in-loop" class="newsletter-section section">
+                <h2 class="section-title">Join the Circle</h2>
+                <p>Step into my circle – where beauty meets power.</p>
+                <<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSck_HoPgfTCRFup95D6_00LSD4lomiGeHidrvFVsep1AGsabg/viewform?embedded=true" width="640" height="450" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>>
+                <div style="max-width: 500px; margin: 2rem auto; background: rgba(33, 20, 16, 0.5); padding: 2rem; border-radius: 5px;">
+                    <p></p>
+                </div>
+            </section>
+        </div>
+
+        <!-- TikTok Page -->
+        <div id="tiktok-page" class="page-content" style="display: none;">
+            <section class="social-hero">
+                <div>
+                    <h1 class="section-title">TikTok | KINGKEPHER</h1>
+                    <p>The Mirror Portal - Curated Moments From the Realm of the Enchantress</p>
+                </div>
+            </section>
+            
+            <section class="social-content section">
+                <p>On TikTok, KingKepher | Enchantress casts short-form spells — a cinematic blend of glamour, grit, and divine guidance. These clips invoke beauty rituals, femme fatale codes, and soft power spells through a hypnotic aesthetic.</p>
+                <a href="https://www.tiktok.com/@kingkepher?_t=ZT-8vhDM62hIBm&_r=1" class="social-follow-btn" target="_blank">Follow Me On TikTok</a>
+            </section>
+        </div>
+
+        <!-- Instagram Page -->
+        <div id="instagram-page" class="page-content" style="display: none;">
+            <section class="social-hero">
+                <div>
+                    <h1 class="section-title">Instagram | KINGKEPHER</h1>
+                    <p>The Mirror Portal - Curated Moments From the Realm of the Enchantress</p>
+                </div>
+            </section>
+            
+            <section class="social-content section">
+                <p>On this feed, the feminine isn't filtered – she's transmuted. Every frame I craft weaves together the elegance of dark femininity with a touch of spiritual enchantment. Through rituals of skincare, fashion, and luxurious editing magic, I bring to life stories that shimmer with depth and allure.</p>
+                <a href="https://www.instagram.com/kingkepher/" class="social-follow-btn" target="_blank">Follow Me On Instagram</a>
+            </section>
+        </div>
+
+        <!-- YouTube Page -->
+        <div id="youtube-page" class="page-content" style="display: none;">
+            <section class="social-hero">
+                <div>
+                    <h1 class="section-title">YouTube | KINGKEPHER</h1>
+                    <p>Cinematic Storytelling & Dark Feminine Magic</p>
+                </div>
+            </section>
+            
+            <section class="social-content section">
+                <div class="series-container">
+                    <div class="series-card">
+                        <img src="https://i.pinimg.com/736x/97/b0/36/97b0362d198a847c1e60cce38f4c8b1c.jpg" alt="Body Care Secrets" class="series-image">
+                        <div class="series-content">
+                            <h3 class="series-title">The Art of Seduction: Body Care Secrets</h3>
+                            <p>Where touch becomes ritual and self-care becomes sacred.</p>
+                        </div>
+                    </div>
+                    <div class="series-card">
+                        <img src="https://i.pinimg.com/736x/b3/ed/03/b3ed039390b644df4e4863895c55296b.jpg" alt="Makeup Mastery" class="series-image">
+                        <div class="series-content">
+                            <h3 class="series-title">The Glamour Coven: Makeup Mastery</h3>
+                            <p>Every brushstroke is a spell. Every shimmer is a summoning.</p>
+                        </div>
+                    </div>
+                    <div class="series-card">
+                        <img src="https://i.pinimg.com/736x/27/48/ee/2748ee0caadae3fc0d2e0ba7fdc9c7a8.jpg" alt="Fashion Rituals" class="series-image">
+                        <div class="series-content">
+                            <h3 class="series-title">Threads of Power: Fashion Rituals</h3>
+                            <p>Explore fashion as a sigil — a spell woven through fabric, form, and femme power.</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="https://www.youtube.com/@kingkepher" class="social-follow-btn" target="_blank">Subscribe On YouTube</a>
+            </section>
+        </div>
+
+        <!-- Lemon8 Page -->
+        <div id="lemon8-page" class="page-content" style="display: none;">
+            <section class="social-hero">
+                <div>
+                    <h1 class="section-title">Lemon8 | KINGKEPHER</h1>
+                    <p>Visual Grimoire of Aesthetic Rituals</p>
+                </div>
+            </section>
+            
+            <section class="social-content section">
+                <p>Lemon8 is the digital grimoire of my aesthetic rituals. From daily skin spells to sacred style snapshots, here's where you'll find the subtleties of sorcery and soft power in visual form.</p>
+                <a href="https://www.lemon8.com/kingkepher" class="social-follow-btn" target="_blank">Follow Me On Lemon8</a>
+            </section>
+        </div>
+
+        <!-- Coming Soon Page -->
+        <div id="coming-soon-page" class="page-content" style="display: none;">
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>COMING SOON</h1>
+                    <p>Magical projects brewing in the cauldron</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">The Ritual Room</h2>
+                <p>Exclusive spell + skincare blend releases coming soon. A curated collection of ritual oils, enchanted skincare, and mystical beauty tools designed to elevate your daily practice.</p>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Enchantress Edit Suite</h2>
+                <p>Downloadable DaVinci Resolve editing packs with my signature cinematic aesthetic. Includes LUTs, transitions, and effects to make your content shimmer with dark feminine magic.</p>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">The Coven Collective</h2>
+                <p>A private Patreon-based community for deep dives into glamour magic, shadow work, and feminine power. Monthly rituals, exclusive content, and sisterhood.</p>
+            </section>
+        </div>
+
+        <!-- Brands Page -->
+        <div id="brands-page" class="page-content" style="display: none;">
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>BRANDS BY ME</h1>
+                    <p>Sacred creations from my enchanted atelier</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="brands-grid">
+                    <div class="brand-card">
+                        <img src="https://i.pinimg.com/736x/22/fb/c5/22fbc5cc2bee91020256974ceba38610.jpg" alt="SK Lux Natura" class="brand-image">
+                        <div class="brand-content">
+                            <h3 class="brand-logo">SK LuxNatura</h3>
+                            <p>Luxurious skincare blends infused with ritual intention and botanical magic. Coming soon.</p>
+                        </div>
+                    </div>
+                    <div class="brand-card">
+                        <img src="https://i.pinimg.com/736x/f7/b0/63/f7b0638d98b87b6140c6d38b0d4e9207.jpg" alt="Witch Hour Merch" class="brand-image">
+                        <div class="brand-content">
+                            <h3 class="brand-logo">WITCH HOUR MERCH</h3>
+                            <p>Apparel and accessories for the modern enchantress. Limited edition drops coming soon.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- About Page -->
+        <div id="about-page" class="page-content" style="display: none;">
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>ABOUT THE ENCHANTRESS</h1>
+                    <p>I am the spell</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="about-container">
+                    <div>
+                        <img src="https://i.pinimg.com/736x/ba/77/a5/ba77a5dd8b66c841196c0826b3775e3b.jpg" alt="KingKepher" class="about-image">
+                    </div>
+                    <div>
+                        <h2 class="section-title">Origin Story</h2>
+                        <p>KingKepher | Enchantress emerged from the shadows where moonlight meets magic. Born from a lifelong fascination with the intersection of beauty, power, and mysticism, this persona is a vessel for dark feminine wisdom and cinematic storytelling.</p>
+                        
+                        <h2 class="section-title">The Creative Journey</h2>
+                        <p>What began as personal rituals of self-care and glamour evolved into a digital altar where others could witness and participate in the alchemy. Through years of refining my craft, I've developed a signature aesthetic that blends old-world mysticism with modern media.</p>
+                        
+                        <h2 class="section-title">Sacred Practices</h2>
+                        <p>My work is rooted in shadow work, lunar cycles, and the belief that beauty rituals are sacred acts of self-devotion. Every video, image, and word is crafted with intention—whether to enchant, empower, or evoke transformation.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Contact Page -->
+        <div id="contact-page" class="page-content" style="display: none;">
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>CONTACT ME</h1>
+                    <p>Summon me with intention</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="contact-form">
+                    <<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdXvvIzR5dX7oPEsCnUTG-16UcmZOgI_G1LF_T3ZT-VPoCLMw/viewform?embedded=true" width="640" height="1113" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>>
+                    <div style="max-width: 600px; margin: 0 auto; background: rgba(33, 20, 16, 0.3); padding: 2rem; border-radius: 5px;">
+                        <p></p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="social-links">
+            <a href="https://www.tiktok.com/@kingkepher" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.instagram.com/kingkepher/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@kingkepher" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.lemon8.com/kingkepher" target="_blank"><i class="fas fa-lemon"></i></a>
+        </div>
+        <p class="copyright">© 2025 KingKepher | Enchantress Productions. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Scroll animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.section');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+            // Magic sparkle effect
+            document.addEventListener('click', function(e) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = e.clientX + 'px';
+                sparkle.style.top = e.clientY + 'px';
+                document.body.appendChild(sparkle);
+                
+                setTimeout(() => {
+                    sparkle.remove();
+                }, 1000);
+            });
+
+            // Random magic particles
+            setInterval(() => {
+                const particle = document.createElement('div');
+                particle.className = 'magic-particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                document.body.appendChild(particle);
+                
+                setTimeout(() => {
+                    particle.remove();
+                }, 3000);
+            }, 500);
+
+            // Simple page routing
+            function showPage(pageId) {
+                document.querySelectorAll('.page-content').forEach(page => {
+                    page.style.display = 'none';
+                });
+                document.getElementById(pageId).style.display = 'block';
+                window.scrollTo(0, 0);
+            }
+
+            // Navigation click handlers
+            document.querySelectorAll('nav a').forEach(link => {
+                if (link.getAttribute('href') === 'index.html') {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        showPage('home-page');
+                    });
+                } else if (link.getAttribute('href') === 'tiktok.html') {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        showPage('tiktok-page');
+                    });
+                } else if (link.getAttribute('href') === 'instagram.html') {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        showPage('instagram-page');
+                    });
+                } else if (link.getAttribute('href') === 'youtube.html') {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        showPage('youtube-page');
+                    });
+                } else if (link.getAttribute('href') === 'lemon8.html') {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        showPage('lemon8-page');
+                    });
+                } else if (link.getAttribute('href') === 'coming-soon.html') {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        showPage('coming-soon-page');
+                    });
+                } else if (link.getAttribute('href') === 'brands.html') {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        showPage('brands-page');
+                    });
+                } else if (link.getAttribute('href') === 'about.html') {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        showPage('about-page');
+                    });
+                } else if (link.getAttribute('href') === 'contact.html') {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        showPage('contact-page');
+                    });
+                }
+            });
+
+            // Initialize home page
+            showPage('home-page');
+        });
+    </script>
+</body>
+</html>
