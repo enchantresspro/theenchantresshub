@@ -1187,12 +1187,52 @@ html, body { overflow-x: hidden; }
             <section id="stay-in-loop" class="newsletter-section section">
                 <h2 class="section-title">Join the Circle</h2>
                 <p>Step into my circle – where beauty meets power.</p>
-                <<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSck_HoPgfTCRFup95D6_00LSD4lomiGeHidrvFVsep1AGsabg/viewform?embedded=true" width="640" height="450" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>>
-                <div style="max-width: 500px; margin: 2rem auto; background: rgba(33, 20, 16, 0.5); padding: 2rem; border-radius: 5px;">
-                    <p></p>
-                </div>
+                 <form id="newsletter-form">
+    <input
+      type="email"
+      id="newsletter-email"
+      placeholder="Enter your email"
+      required
+    />
+    <button type="submit">Subscribe</button>
+    <p id="newsletter-msg" aria-live="polite"></p>
+  </form>
             </section>
         </div>
+
+        <script>
+  (function () {
+    const form = document.getElementById("newsletter-form");
+    const emailEl = document.getElementById("newsletter-email");
+    const msg = document.getElementById("newsletter-msg");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      msg.textContent = "Submitting…";
+
+      try {
+        const res = await fetch("/api/mailchimp", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: emailEl.value.trim() })
+        });
+
+        // Try JSON first, fall back to text so we never throw a parse error UI
+        const ct = res.headers.get("content-type") || "";
+        const data = ct.includes("application/json") ? await res.json() : { error: await res.text() };
+
+        if (res.ok) {
+          msg.textContent = "✨ You’re subscribed! Check your inbox.";
+          form.reset();
+        } else {
+          msg.textContent = "⚠️ " + (data.error || "Subscription failed");
+        }
+      } catch (err) {
+        msg.textContent = "⚠️ " + err.message;
+      }
+    });
+  })();
+</script>
 
         <!-- TikTok Page -->
         <div id="tiktok-page" class="page-content" style="display: none;">
@@ -1554,6 +1594,7 @@ html, body { overflow-x: hidden; }
 </body>
 
 </html>
+
 
 
 
