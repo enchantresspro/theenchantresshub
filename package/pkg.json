@@ -1,0 +1,19 @@
+{
+  "name": "the-enchantress-hub",
+  "version": "1.0.0",
+  "description": "The Enchantress Hub official website",
+  "private": true,
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "build": "echo \"No build step\""
+  },
+  "dependencies": {
+    "@mailchimp/mailchimp_marketing": "3.0.0",
+    "stripe": "^14.0.0"
+  },
+  "engines": {
+    "node": "22.x"
+  },
+  "packageManager": "npm@10"
+}
