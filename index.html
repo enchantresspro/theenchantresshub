@@ -1329,50 +1329,90 @@ html, body { overflow-x: hidden; }
             </section>
 
             <!-- Stay in Loop Section -->
-           <section class="newsletter-wrap">
+          <section class="newsletter-wrap">
   <h3 class="newsletter-title">JOIN THE CIRCLE</h3>
   <p class="newsletter-sub">Step into my circle – where beauty meets power.</p>
 
-  <form id="newsletter-form" action="#" method="post" novalidate>
-    <label class="sr-only" for="newsletter-email">Email</label>
-    <input id="newsletter-email" type="email" placeholder="Enter your email" required>
-    <input type="submit" value="Subscribe">
+  <!-- Netlify Forms enabled -->
+  <form id="newsletter-form"
+        name="newsletter"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        action="/?subscribed=1">
+    <!-- required for Netlify to register the form -->
+    <input type="hidden" name="form-name" value="newsletter">
+    <!-- honeypot (spam protection) -->
+    <p class="sr-only">
+      <label>Don’t fill this out: <input name="bot-field"></label>
+    </p>
+
+    <input id="newsletter-email" type="email" name="email" placeholder="Enter your email" required>
+    <input id="newsletter-submit" type="submit" value="Subscribe">
   </form>
+
+  <!-- status message area -->
+  <div id="newsletter-status" class="notice" aria-live="polite"></div>
 </section>
         </div>
 
         <script>
-  (function () {
-    const form = document.getElementById("newsletter-form");
-    const emailEl = document.getElementById("newsletter-email");
-    const msg = document.getElementById("newsletter-msg");
+(function () {
+  const form   = document.getElementById('newsletter-form');
+  const status = document.getElementById('newsletter-status');
+  const submit = document.getElementById('newsletter-submit');
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      msg.textContent = "Submitting…";
+  // helper: encode as x-www-form-urlencoded
+  const encode = (data) =>
+    Object.keys(data)
+      .map(k => encodeURIComponent(k) + "=" + encodeURIComponent(data[k]))
+      .join("&");
 
-      try {
-        const res = await fetch("/api/mailchimp", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: emailEl.value.trim() })
-        });
+  // Show status helper
+  function showStatus(msg, ok=true) {
+    status.textContent = msg;
+    status.classList.remove('ok','err');
+    status.classList.add(ok ? 'ok' : 'err');
+  }
 
-        // Try JSON first, fall back to text so we never throw a parse error UI
-        const ct = res.headers.get("content-type") || "";
-        const data = ct.includes("application/json") ? await res.json() : { error: await res.text() };
+  // If user came from non-JS submit (fallback)
+  if (new URLSearchParams(location.search).get('subscribed') === '1') {
+    showStatus("You’re in. Check your inbox for a welcome spell ✨", true);
+    // clean the URL
+    history.replaceState({}, "", location.pathname);
+  }
 
-        if (res.ok) {
-          msg.textContent = "✨ You’re subscribed! Check your inbox.";
-          form.reset();
-        } else {
-          msg.textContent = "⚠️ " + (data.error || "Subscription failed");
-        }
-      } catch (err) {
-        msg.textContent = "⚠️ " + err.message;
+  // AJAX submit (prevents page reload)
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    submit.disabled = true;
+    submit.value = "Subscribing…";
+
+    const data = {
+      "form-name": form.getAttribute('name'),
+      email: form.querySelector('[name="email"]').value
+    };
+
+    try {
+      const res = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: encode(data)
+      });
+      if (res.ok) {
+        form.reset();
+        showStatus("You’re in. Check your inbox for a welcome spell ✨", true);
+      } else {
+        throw new Error("Network");
       }
-    });
-  })();
+    } catch (err) {
+      showStatus("Hmm, something fizzled. Try again in a moment.", false);
+    } finally {
+      submit.disabled = false;
+      submit.value = "Subscribe";
+    }
+  });
+})();
 </script>
 
         <!-- TikTok Page -->
@@ -1735,6 +1775,7 @@ html, body { overflow-x: hidden; }
 </body>
 
 </html>
+
 
 
 
