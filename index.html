@@ -1364,6 +1364,8 @@ html, body { overflow-x: hidden; }
   const form   = document.getElementById('newsletter-form');
   const status = document.getElementById('newsletter-status');
   const submit = document.getElementById('newsletter-submit');
+  const emailEl = document.getElementById("newsletter-email");
+  const msg = document.getElementById("newsletter-msg");
 
   // helper: encode as x-www-form-urlencoded
   const encode = (data) =>
@@ -1384,6 +1386,12 @@ html, body { overflow-x: hidden; }
     // clean the URL
     history.replaceState({}, "", location.pathname);
   }
+    else {
+          msg.textContent = "⚠️ " + (data.error || "Subscription failed");
+        }
+        catch (err) {
+        msg.textContent = "⚠️ " + err.message;
+        }
 
   // AJAX submit (prevents page reload)
   form.addEventListener('submit', async (e) => {
@@ -1397,9 +1405,9 @@ html, body { overflow-x: hidden; }
     };
 
     try {
-      const res = await fetch("/", {
+      const res = await fetch("/api/mailchimp", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        headers: { "Content-Type": "application/json" },
         body: encode(data)
       });
       if (res.ok) {
@@ -1610,8 +1618,9 @@ html, body { overflow-x: hidden; }
             <a href="https://www.youtube.com/@kingkepher" target="_blank"><i class="fab fa-youtube"></i></a>
             <a href="https://www.lemon8.com/kingkepher" target="_blank"><i class="fas fa-lemon"></i></a>
         </div>
-        <p class="copyright">© 2025 KingKepher | Enchantress Productions. All rights reserved.</p>
-    </footer>
+        <p class="copyright">© 2025 KingKepher | Enchantress Productions. All rights reserved.</p> 
+        <a href="terms.html" style="color: var(--text-color); text-decoration: underline;">Terms and Conditions</a>
+</footer>
 
     <script>
   (function () {
@@ -1778,6 +1787,7 @@ html, body { overflow-x: hidden; }
 </body>
 
 </html>
+
 
 
 
