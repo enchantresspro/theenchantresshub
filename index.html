@@ -1242,20 +1242,16 @@ html, body { overflow-x: hidden; }
             </section>
 
             <!-- Stay in Loop Section -->
-            <section id="newsletter-form" class="newsletter-section section">
-                <h2 class="section-title">Join the Circle</h2>
-                <p>Step into my circle – where beauty meets power.</p>
-                 <form id="newsletter-form">
-    <input
-      type="email"
-      id="newsletter-email"
-      placeholder="Enter your email"
-      required
-    />
-    <button type="submit">Subscribe</button>
-    <p id="newsletter-msg" aria-live="polite"></p>
+           <section class="newsletter-wrap">
+  <h3 class="newsletter-title">JOIN THE CIRCLE</h3>
+  <p class="newsletter-sub">Step into my circle – where beauty meets power.</p>
+
+  <form id="newsletter-form" action="#" method="post" novalidate>
+    <label class="sr-only" for="newsletter-email">Email</label>
+    <input id="newsletter-email" type="email" placeholder="Enter your email" required>
+    <input type="submit" value="Subscribe">
   </form>
-            </section>
+</section>
         </div>
 
         <script>
@@ -1652,6 +1648,7 @@ html, body { overflow-x: hidden; }
 </body>
 
 </html>
+
 
 
 
