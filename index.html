@@ -953,6 +953,99 @@
   .cart-count.badge-pop {
     animation: none !important;
   }
+    /* prevent horizontal overspill everywhere */
+html, body { overflow-x: hidden; }
+* { box-sizing: border-box; }
+
+/* nav layout shell */
+.enchantress-nav {
+  position: sticky; top: 0; z-index: 1000;
+  background: rgba(10,9,12,.8);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(216,191,109,.25);
+  padding-top: env(safe-area-inset-top); /* notches */
+}
+.enchantress-nav .container {
+  max-width: 1200px; margin: 0 auto; padding: 14px 18px;
+  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px;
+}
+
+/* logo left */
+.enchantress-nav .logo {
+  color: #f4ede4; text-decoration: none; font-weight: 700; letter-spacing: .12em;
+  white-space: nowrap; /* avoid wrapping logo */
+}
+
+/* center wrapper: links + actions side-by-side */
+.nav-center {
+  display: flex; align-items: center; justify-content: center;
+  gap: 18px; flex-wrap: nowrap; min-width: 0; /* allow flex to shrink */
+}
+
+/* links row */
+.nav-links {
+  display: flex; align-items: center; gap: 22px; flex-wrap: wrap;
+  justify-content: center; min-width: 0;
+}
+.nav-links > a, .dropdown > a {
+  color: #f4ede4; text-decoration: none; font-size: .98rem; letter-spacing: .06em;
+  padding: 6px 2px; white-space: nowrap;
+}
+.nav-links > a:hover, .dropdown > a:hover { color: #d8bf6d; }
+
+/* dropdown */
+.dropdown { position: relative; }
+.dropdown-content {
+  display: none; position: absolute; left: 50%; transform: translateX(-50%);
+  top: 130%; background: #1a1619; border: 1px solid rgba(216,191,109,.3);
+  padding: 10px 12px; min-width: 180px; box-shadow: 0 10px 24px rgba(0,0,0,.35);
+}
+.dropdown-content a { display:block; padding:8px 6px; color:#f4ede4; text-decoration:none; }
+.dropdown-content a:hover { color:#d8bf6d; }
+.dropdown:hover .dropdown-content { display:block; }
+
+/* actions (profile + cart) directly after Contact Me on desktop */
+.nav-actions { display:flex; align-items:center; gap:14px; }
+
+/* cart styles from earlier retained */
+.cart-icon {
+  position: relative; display:inline-flex; align-items:center; justify-content:center;
+  width:36px; height:36px; border-radius:999px;
+  border:1px solid rgba(216,191,109,.35); text-decoration:none;
+}
+.cart-emoji { font-size:18px; line-height:1; }
+.cart-count {
+  position:absolute; top:-6px; right:-6px; min-width:18px; height:18px; padding:0 5px;
+  border-radius:999px; background:#d8bf6d; color:#1a1619; font-size:11px; font-weight:700;
+  display:inline-flex; align-items:center; justify-content:center; border:1px solid #1a1619;
+}
+
+/* mobile/tablet: center nav, stack, and keep icons centered on their own row */
+@media (max-width: 900px) {
+  .enchantress-nav .container {
+    grid-template-columns: 1fr;
+  }
+  .enchantress-nav .logo {
+    justify-self: center; text-align: center; font-size: .95rem; margin-bottom: 6px;
+  }
+  .nav-center {
+    flex-direction: column; gap: 10px; width: 100%;
+  }
+  .nav-links {
+    width: 100%; justify-content: center; row-gap: 10px;
+  }
+  .nav-actions {
+    justify-content: center; /* center the profile + cart row */
+  }
+  /* shrink long words so they don't force overflow */
+  .nav-links a, .dropdown > a { font-size: .95rem; word-break: keep-all; }
+}
+
+/* xl screens: give breathing room */
+@media (min-width: 1400px) {
+  .nav-links { gap: 30px; }
+  .nav-links > a, .dropdown > a { font-size: 1.05rem; }
+}
     </style>
 </head>
 <body>
@@ -961,34 +1054,36 @@
   <div class="container">
     <a href="index.html" class="logo">ENCHANTRESS PRODUCTIONS</a>
 
-    <div class="nav-links">
-      <a href="index.html">Home</a>
+    <!-- NEW: center wrapper holds links + actions -->
+    <div class="nav-center">
+      <div class="nav-links">
+        <a href="index.html">Home</a>
 
-      <div class="dropdown">
-        <a href="#">Content <i class="fas fa-chevron-down"></i></a>
-        <div class="dropdown-content">
-          <a href="tiktok.html">TikTok</a>
-          <a href="instagram.html">Instagram</a>
-          <a href="youtube.html">YouTube</a>
-          <a href="lemon8.html">Lemon8</a>
+        <div class="dropdown">
+          <a href="#">Content <i class="fas fa-chevron-down"></i></a>
+          <div class="dropdown-content">
+            <a href="tiktok.html">TikTok</a>
+            <a href="instagram.html">Instagram</a>
+            <a href="youtube.html">YouTube</a>
+            <a href="lemon8.html">Lemon8</a>
+          </div>
         </div>
+
+        <a href="coming-soon.html">Coming Soon</a>
+        <a href="brands.html">Brands By Me</a>
+        <a href="about.html">About Me</a>
+        <a href="contact.html">Contact Me</a>
       </div>
 
-      <a href="coming-soon.html">Coming Soon</a>
-      <a href="brands.html">Brands By Me</a>
-      <a href="about.html">About Me</a>
-      <a href="contact.html">Contact Me</a>
-    </div>
-
-    <div class="nav-actions">
-      <a href="#feature-unavailable" class="action-icon" aria-label="My profile">
-        <i class="fas fa-user"></i>
-      </a>
-
-      <a href="cart.html" class="cart-icon" aria-label="Cart">
-        <span class="cart-emoji">🛒</span>
-        <span id="cart-count" class="cart-count">0</span>
-      </a>
+      <div class="nav-actions">
+        <a href="#feature-unavailable" class="action-icon" aria-label="My profile">
+          <i class="fas fa-user"></i>
+        </a>
+        <a href="cart.html" class="cart-icon" aria-label="Cart">
+          <span class="cart-emoji">🛒</span>
+          <span id="cart-count" class="cart-count">0</span>
+        </a>
+      </div>
     </div>
   </div>
 </nav>
@@ -1459,6 +1554,7 @@
 </body>
 
 </html>
+
 
 
 
