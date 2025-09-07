@@ -799,46 +799,199 @@
                 flex-direction: column;
                 text-align: center;
             }
-        }
+        /* --- Nav layout --- */
+.enchantress-nav {
+  position: sticky; top: 0; z-index: 1000;
+  background: rgba(10, 9, 12, 0.8); /* moody, witchy */
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(216,191,109,0.25); /* goldish accent */
+}
+
+.enchantress-nav .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 14px 18px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;  /* left logo | centered links | right actions */
+  align-items: center;
+  gap: 12px;
+}
+
+/* Left */
+.enchantress-nav .logo {
+  justify-self: start;
+  letter-spacing: .12em;
+  font-weight: 700;
+  text-decoration: none;
+  color: #f4ede4;
+}
+
+/* Center (desktop) */
+.enchantress-nav .nav-links {
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.enchantress-nav .nav-links > a,
+.enchantress-nav .dropdown > a {
+  color: #f4ede4;
+  text-decoration: none;
+  font-size: 0.98rem;
+  letter-spacing: .06em;
+  padding: 6px 2px;
+}
+
+.enchantress-nav .nav-links > a:hover,
+.enchantress-nav .dropdown > a:hover {
+  color: #d8bf6d; /* brand gold accent */
+}
+
+/* Dropdown */
+.dropdown { position: relative; }
+.dropdown-content {
+  display: none;
+  position: absolute; left: 50%; transform: translateX(-50%);
+  top: 130%;
+  background: #1a1619;
+  border: 1px solid rgba(216,191,109,0.3);
+  padding: 10px 12px;
+  min-width: 180px;
+  box-shadow: 0 10px 24px rgba(0,0,0,.35);
+}
+.dropdown-content a {
+  display: block; padding: 8px 6px; color: #f4ede4; text-decoration: none;
+}
+.dropdown-content a:hover { color: #d8bf6d; }
+.dropdown:hover .dropdown-content { display: block; }
+
+/* Right actions */
+.nav-actions {
+  justify-self: end;
+  display: flex; align-items: center; gap: 14px;
+}
+
+.action-icon i { color: #f4ede4; font-size: 1.05rem; }
+.action-icon:hover i { color: #d8bf6d; }
+
+/* Cart icon + badge */
+.cart-icon {
+  position: relative;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px;
+  border-radius: 999px;
+  border: 1px solid rgba(216,191,109,0.35);
+  text-decoration: none;
+}
+.cart-emoji { font-size: 18px; line-height: 1; }
+.cart-count {
+  position: absolute; top: -6px; right: -6px;
+  min-width: 18px; height: 18px; padding: 0 5px;
+  border-radius: 999px;
+  background: #d8bf6d; color: #1a1619;
+  font-size: 11px; font-weight: 700;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid #1a1619;
+}
+
+/* --- Mobile & small tablets: mirror SK’s centered vibe --- */
+@media (max-width: 900px) {
+  .enchantress-nav .container {
+    grid-template-columns: 1fr;   /* single column */
+    gap: 8px;
+  }
+  .enchantress-nav .logo {
+    justify-self: center;
+    text-align: center;
+    font-size: 0.95rem;
+  }
+  .enchantress-nav .nav-links {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .enchantress-nav .nav-links > a,
+  .enchantress-nav .dropdown > a { font-size: 0.95rem; }
+  .nav-actions { justify-content: center; }
+}
+
+/* Extra-large screens: give the center menu a graceful spread */
+@media (min-width: 1400px) {
+  .enchantress-nav .nav-links { gap: 30px; }
+  .enchantress-nav .nav-links > a,
+  .enchantress-nav .dropdown > a { font-size: 1.05rem; }
+  .enchantress-nav .logo { font-size: 1rem; }
+}
+    /* --- Cart micro-animations --- */
+@keyframes cart-wiggle {
+  0%   { transform: scale(1) rotate(0);   box-shadow: 0 0 0 rgba(216,191,109,0); }
+  20%  { transform: scale(1.06) rotate(-6deg); box-shadow: 0 0 14px rgba(216,191,109,.35); }
+  40%  { transform: scale(1.06) rotate(6deg);  box-shadow: 0 0 18px rgba(216,191,109,.45); }
+  60%  { transform: scale(1.04) rotate(-3deg); box-shadow: 0 0 14px rgba(216,191,109,.3); }
+  80%  { transform: scale(1.02) rotate(2deg);  box-shadow: 0 0 10px rgba(216,191,109,.2); }
+  100% { transform: scale(1) rotate(0);   box-shadow: 0 0 0 rgba(216,191,109,0); }
+}
+
+@keyframes badge-pop {
+  0%   { transform: scale(.6); opacity: .5; }
+  60%  { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+.cart-icon.cart-pop {
+  animation: cart-wiggle 600ms ease-in-out;
+}
+
+.cart-count.badge-pop {
+  animation: badge-pop 450ms ease-out;
+}
+
+/* accessibility: respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .cart-icon.cart-pop,
+  .cart-count.badge-pop {
+    animation: none !important;
+  }
     </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="enchantress-nav">
-        <a href="index.html" class="logo">ENCHANTRESS PRODUCTIONS</a>
-        
-        <div class="nav-links">
-            <a href="index.html">Home</a>
-            
-            <div class="dropdown">
-                <a href="#">Content <i class="fas fa-chevron-down"></i></a>
-                <div class="dropdown-content">
-                    <a href="tiktok.html">TikTok</a>
-                    <a href="instagram.html">Instagram</a>
-                    <a href="youtube.html">YouTube</a>
-                    <a href="lemon8.html">Lemon8</a>
-                </div>
-            </div>
-            
-            <a href="coming-soon.html">Coming Soon</a>
-            <a href="brands.html">Brands By Me</a>
-            <a href="about.html">About Me</a>
-            <a href="contact.html">Contact Me</a>
+   <!-- Navigation Bar -->
+<nav class="enchantress-nav">
+  <div class="container">
+    <a href="index.html" class="logo">ENCHANTRESS PRODUCTIONS</a>
+
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+
+      <div class="dropdown">
+        <a href="#">Content <i class="fas fa-chevron-down"></i></a>
+        <div class="dropdown-content">
+          <a href="tiktok.html">TikTok</a>
+          <a href="instagram.html">Instagram</a>
+          <a href="youtube.html">YouTube</a>
+          <a href="lemon8.html">Lemon8</a>
         </div>
-        
-        <div class="nav-actions">
-            <!-- Profile Icon -->
-            <a href="#feature-unavailable" class="action-icon">
-                <i class="fas fa-user"></i>
-            </a>
-      <div class="icons">
-        <a href="cart.html" class="icon">
-            🛒
-            <span id="cart-count"></span>
-            <div class="cart-dot"></div>
-            </a>
-        </div>
-    </nav>
+      </div>
+
+      <a href="coming-soon.html">Coming Soon</a>
+      <a href="brands.html">Brands By Me</a>
+      <a href="about.html">About Me</a>
+      <a href="contact.html">Contact Me</a>
+    </div>
+
+    <div class="nav-actions">
+      <a href="#feature-unavailable" class="action-icon" aria-label="My profile">
+        <i class="fas fa-user"></i>
+      </a>
+
+      <a href="cart.html" class="cart-icon" aria-label="Cart">
+        <span class="cart-emoji">🛒</span>
+        <span id="cart-count" class="cart-count">0</span>
+      </a>
+    </div>
+  </div>
+</nav>
     
 
     <!-- Main Content -->
@@ -1142,6 +1295,62 @@
     </footer>
 
     <script>
+  (function () {
+    let prevCartCount = 0;
+
+    function getCartCount() {
+      try {
+        const raw = localStorage.getItem('cartItems'); // <-- change key if yours is different
+        if (!raw) return 0;
+        const items = JSON.parse(raw);
+        if (Array.isArray(items)) {
+          return items.reduce((n, it) => n + (Number(it.quantity) || 1), 0);
+        }
+        return 0;
+      } catch (_) { return 0; }
+    }
+
+    function animateCart() {
+      const cart = document.querySelector('.cart-icon');
+      const badge = document.getElementById('cart-count');
+      if (cart) {
+        cart.classList.remove('cart-pop'); // restart if spam-clicked
+        void cart.offsetWidth;             // reflow to retrigger
+        cart.classList.add('cart-pop');
+        setTimeout(() => cart.classList.remove('cart-pop'), 700);
+      }
+      if (badge) {
+        badge.classList.remove('badge-pop');
+        void badge.offsetWidth;
+        badge.classList.add('badge-pop');
+        setTimeout(() => badge.classList.remove('badge-pop'), 600);
+      }
+    }
+
+    function renderCartCount() {
+      const el = document.getElementById('cart-count');
+      if (!el) return;
+      const count = getCartCount();
+      el.textContent = count;
+      el.style.display = count > 0 ? 'inline-flex' : 'none';
+
+      // auto-animate when the count increases
+      if (count > prevCartCount) animateCart();
+      prevCartCount = count;
+    }
+
+    // Public helpers
+    window.refreshCartBadge = renderCartCount; // call after cart changes
+    window.animateCart = animateCart;          // optional manual trigger
+
+    // Init
+    document.addEventListener('DOMContentLoaded', renderCartCount);
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'cartItems') renderCartCount();
+    });
+  })();
+    </script>
+    <script>
         // Scroll animations
         document.addEventListener('DOMContentLoaded', function() {
             const sections = document.querySelectorAll('.section');
@@ -1250,6 +1459,7 @@
 </body>
 
 </html>
+
 
 
 
