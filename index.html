@@ -1332,54 +1332,69 @@ html, body { overflow-x: hidden; }
             </section>
 
             <!-- Stay in Loop Section -->
-          <section class="newsletter-section">
-  <h2>Join the Circle</h2></h2>
-  <p>Step into my circle – where beauty meets power.</p>
+        <section class="newsletter-wrap">
+  <h3 class="newsletter-title">JOIN THE CIRCLE</h3>
+  <p class="newsletter-sub">Step into my circle – where beauty meets power.</p>
 
-  <form id="newsletter-form">
-    <input
-      type="email"
-      id="newsletter-email"
-      placeholder="Enter your email"
-      required
-    />
-    <button type="submit">Subscribe</button>
-    <p id="newsletter-msg" aria-live="polite"></p>
+  <form id="newsletter-form" novalidate>
+    <input id="newsletter-email" name="email" type="email" placeholder="Enter your email" required>
+    <input id="newsletter-submit" type="submit" value="Subscribe">
   </form>
+
+  <div id="newsletter-status" class="notice" aria-live="polite"></div>
 </section>
 
        <script>
-  (function () {
-    const form = document.getElementById("newsletter-form");
-    const emailEl = document.getElementById("newsletter-email");
-    const msg = document.getElementById("newsletter-msg");
+(function () {
+  const form   = document.getElementById('newsletter-form');
+  const email  = document.getElementById('newsletter-email');
+  const submit = document.getElementById('newsletter-submit');
+  const status = document.getElementById('newsletter-status');
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      msg.textContent = "Submitting…";
+  function say(msg, ok=true){
+    status.textContent = msg;
+    status.classList.remove('ok','err');
+    status.classList.add(ok ? 'ok' : 'err');
+  }
 
-      try {
-        const res = await fetch("/api/subscribe", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: emailEl.value.trim() })
-        });
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const value = (email.value || '').trim();
+    if (!value) return say('Enter a valid email.', false);
 
-        // Try JSON first, fall back to text so we never throw a parse error UI
-        const ct = res.headers.get("content-type") || "";
-        const data = ct.includes("application/json") ? await res.json() : { error: await res.text() };
+    submit.disabled = true;
+    submit.value = 'Subscribing…';
+    say('');
 
-        if (res.ok) {
-          msg.textContent = "✨ You’re subscribed! Check your inbox.";
-          form.reset();
+    try {
+      const res = await fetch('/.netlify/functions/mc-subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: value })
+      });
+
+      const data = await res.json().catch(() => ({}));
+      if (res.ok) {
+        form.reset();
+        say('You’re in. Check your inbox for a welcome spell ✨', true);
+      } else {
+        // common Mailchimp errors
+        if (data.title === 'Member Exists') {
+          say('You’re already in the circle 🖤', true);
+        } else if (data.title === 'Invalid Resource') {
+          say('That email looks off. Try again?', false);
         } else {
-          msg.textContent = "⚠️ " + (data.error || "Subscription failed");
+          say('Hmm, something fizzled. Try again shortly.', false);
         }
-      } catch (err) {
-        msg.textContent = "⚠️ " + err.message;
       }
-    });
-  })();
+    } catch (err) {
+      say('Network glitch. Try again in a moment.', false);
+    } finally {
+      submit.disabled = false;
+      submit.value = 'Subscribe';
+    }
+  });
+})();
 </script>
         <!-- TikTok Page -->
         <div id="tiktok-page" class="page-content" style="display: none;">
@@ -1742,6 +1757,7 @@ html, body { overflow-x: hidden; }
 </body>
 
 </html>
+
 
 
 
