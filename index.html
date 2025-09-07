@@ -703,6 +703,64 @@
             padding: 5rem 2rem;
             background: rgba(33, 20, 16, 0.3);
         }
+        /* --- Newsletter / Circle form --- */
+#newsletter-form {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 0;
+  margin-top: 1rem;
+}
+
+/* email input */
+#newsletter-form input[type="email"] {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid rgba(216,191,109,0.4);
+  border-right: none;
+  border-radius: 8px 0 0 8px;
+  background: rgba(20,18,20,0.7);
+  color: #f4ede4;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#newsletter-form input[type="email"]::placeholder {
+  color: rgba(244,237,228,0.6);
+  font-style: italic;
+}
+
+#newsletter-form input[type="email"]:focus {
+  border-color: #d8bf6d;
+  box-shadow: 0 0 8px rgba(216,191,109,0.5);
+}
+
+/* subscribe button */
+#newsletter-form button,
+#newsletter-form input[type="submit"] {
+  padding: 12px 20px;
+  border: 1px solid rgba(216,191,109,0.6);
+  border-radius: 0 8px 8px 0;
+  background: linear-gradient(135deg, #5b3524 0%, #9d4133 50%, #d8bf6d 100%);
+  color: #1a1619;
+  font-weight: 600;
+  letter-spacing: .05em;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+#newsletter-form button:hover,
+#newsletter-form input[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(216,191,109,0.45);
+}
+
+#newsletter-form button:active,
+#newsletter-form input[type="submit"]:active {
+  transform: translateY(0);
+  box-shadow: 0 0 6px rgba(216,191,109,0.35);
+}
 
         /* ===== MAGICAL EFFECTS ===== */
         .sparkle {
@@ -1184,7 +1242,7 @@ html, body { overflow-x: hidden; }
             </section>
 
             <!-- Stay in Loop Section -->
-            <section id="stay-in-loop" class="newsletter-section section">
+            <section id="newsletter-form" class="newsletter-section section">
                 <h2 class="section-title">Join the Circle</h2>
                 <p>Step into my circle – where beauty meets power.</p>
                  <form id="newsletter-form">
@@ -1594,6 +1652,7 @@ html, body { overflow-x: hidden; }
 </body>
 
 </html>
+
 
 
 
