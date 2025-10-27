@@ -496,6 +496,103 @@
       h1{ font-size:2.5rem; }
       .brand-title{ font-size:1.8rem; }
     }
+    /* ----------- BRANDS BY ME PAGE TYPOGRAPHY ENHANCEMENT ----------- */
+.brands-section {
+  color: #e8dcd0; /* soft golden-ivory text tone */
+  font-family: 'Cinzel', serif;
+  text-align: center;
+}
+
+.brands-section h1,
+.brands-section h2,
+.brands-section h3 {
+  color: #f8bfb0; /* your rose-gold highlight */
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px rgba(248, 191, 176, 0.25);
+  font-weight: 600;
+}
+
+.brands-section p {
+  color: #d8bf6d;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  letter-spacing: 0.3px;
+  opacity: 0.9;
+  max-width: 700px;
+  margin: 0 auto 1.5rem auto;
+}
+
+/* Product card content area */
+.brand-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(216, 191, 109, 0.25);
+  border-radius: 18px;
+  box-shadow: 0 0 25px rgba(248, 191, 176, 0.1);
+  backdrop-filter: blur(8px);
+  color: #e8dcd0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.brand-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 35px rgba(248, 191, 176, 0.25);
+}
+
+/* Small descriptor text under h1 */
+.brands-section .subtitle {
+  color: #b2a79d;
+  font-size: 0.95rem;
+  letter-spacing: 0.4px;
+  margin-bottom: 2rem;
+}
+
+/* Tag buttons like "Vegan-friendly" */
+.brand-card .tag {
+  background: rgba(248, 191, 176, 0.1);
+  border: 1px solid rgba(248, 191, 176, 0.3);
+  border-radius: 30px;
+  padding: 6px 14px;
+  color: #f8bfb0;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin: 4px;
+  display: inline-block;
+  transition: background 0.3s ease;
+}
+.brand-card .tag:hover {
+  background: rgba(248, 191, 176, 0.25);
+}
+
+/* "Visit SK LuxNatura" button */
+.brand-card a.btn {
+  background: linear-gradient(90deg, #9d4133 0%, #d8bf6d 100%);
+  color: #0b0603;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  display: inline-block;
+  text-decoration: none;
+  box-shadow: 0 0 15px rgba(216, 191, 109, 0.25);
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+.brand-card a.btn:hover {
+  background: linear-gradient(90deg, #d8bf6d 0%, #f8bfb0 100%);
+  box-shadow: 0 0 25px rgba(248, 191, 176, 0.4);
+}
+    .brand-card {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 1s ease forwards;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
   </style>
 </head>
 <body>
